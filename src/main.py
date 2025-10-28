@@ -28,12 +28,6 @@ app.register_blueprint(note_bp, url_prefix='/api')
 # Get Supabase credentials from environment variables
 SUPABASE_DB_URL = os.getenv('SUPABASE_DB_URL')
 
-# Setup local SQLite as fallback
-ROOT_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-DB_PATH = os.path.join(ROOT_DIR, 'database', 'app.db')
-os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
-SQLITE_URI = f"sqlite:///{DB_PATH}"
-
 if SUPABASE_DB_URL:
     try:
         # Try to use Supabase PostgreSQL database
@@ -47,23 +41,33 @@ if SUPABASE_DB_URL:
         print("✅ Successfully connected to Supabase PostgreSQL database")
     except Exception as e:
         print(f"❌ Failed to connect to Supabase: {str(e)}")
-        print("⚠️  Falling back to local SQLite database")
+        print("⚠️  Cannot use SQLite on Vercel (read-only filesystem)")
         print("💡 Tip: Make sure you're using the 'Connection pooling' URI from Supabase (port 6543)")
+        print("💡 Set SUPABASE_DB_URL in Vercel environment variables")
+        raise Exception("Database connection failed. Supabase is required for deployment.")
+else:
+    # Local development fallback to SQLite
+    print("⚠️  SUPABASE_DB_URL not set")
+    print("💡 For Vercel deployment, you MUST set SUPABASE_DB_URL environment variable")
+    
+    # Only use SQLite for local development (will fail on Vercel)
+    try:
+        ROOT_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+        DB_PATH = os.path.join(ROOT_DIR, 'database', 'app.db')
+        os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
+        SQLITE_URI = f"sqlite:///{DB_PATH}"
         
-        # Fallback to SQLite
         app.config['SQLALCHEMY_DATABASE_URI'] = SQLITE_URI
         app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
         db.init_app(app)
         with app.app_context():
             db.create_all()
-else:
-    # Use local SQLite database
-    app.config['SQLALCHEMY_DATABASE_URI'] = SQLITE_URI
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    db.init_app(app)
-    with app.app_context():
-        db.create_all()
-    print("⚠️  Using local SQLite database (SUPABASE_DB_URL not set in .env)")
+        print("✅ Using local SQLite database (development only)")
+    except OSError:
+        # Running on a read-only filesystem (e.g., Vercel)
+        print("❌ Cannot create SQLite database on read-only filesystem")
+        print("💡 Set SUPABASE_DB_URL environment variable in Vercel")
+        raise Exception("SUPABASE_DB_URL environment variable is required for deployment")
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
