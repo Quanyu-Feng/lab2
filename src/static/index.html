@@ -102,13 +102,32 @@
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .new-note-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .generate-note-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .generate-note-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(23, 162, 184, 0.4);
         }
 
         .notes-list {
@@ -251,6 +270,37 @@
             transform: translateY(-1px);
         }
 
+        .btn-translate {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .btn-translate:hover:not(:disabled) {
+            background: #138496;
+            transform: translateY(-1px);
+        }
+
+        .btn-translate:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .language-selector {
+            padding: 8px 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            background: white;
+            transition: border-color 0.3s ease;
+        }
+
+        .language-selector:focus {
+            outline: none;
+            border-color: #17a2b8;
+        }
+
         .form-group {
             margin-bottom: 20px;
         }
@@ -334,6 +384,238 @@
             border: 1px solid #c3e6cb;
         }
 
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { 
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to { 
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-section {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-section.left {
+            background: white;
+            border-right: 2px solid #e1e5e9;
+        }
+
+        .modal-section.right {
+            background: #f8f9fa;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .modal-form-group {
+            margin-bottom: 20px;
+        }
+
+        .modal-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .modal-textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: inherit;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        .modal-textarea:focus {
+            outline: none;
+            border-color: #17a2b8;
+        }
+
+        .modal-select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            background: white;
+            transition: border-color 0.3s ease;
+        }
+
+        .modal-select:focus {
+            outline: none;
+            border-color: #17a2b8;
+        }
+
+        .modal-btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .modal-btn-primary {
+            background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+            color: white;
+        }
+
+        .modal-btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(23, 162, 184, 0.4);
+        }
+
+        .modal-btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .modal-btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .modal-btn-success:hover:not(:disabled) {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+        .modal-btn-success:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .preview-box {
+            background: white;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            overflow: auto;
+        }
+
+        .preview-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .preview-content {
+            color: #333;
+            font-size: 14px;
+            line-height: 1.6;
+            min-height: 60px;
+        }
+
+        .preview-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .preview-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .preview-tag {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 4px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            color: #667eea;
+            font-size: 12px;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .main-content {
@@ -356,6 +638,22 @@
             
             .editor-title {
                 max-width: 250px;
+            }
+
+            .modal-content {
+                grid-template-columns: 1fr;
+                width: 95%;
+                max-height: 85vh;
+                overflow-y: auto;
+            }
+
+            .modal-section.left {
+                border-right: none;
+                border-bottom: 2px solid #e1e5e9;
+            }
+
+            .modal-section {
+                padding: 20px;
             }
         }
 
@@ -394,6 +692,7 @@
             <div class="sidebar">
                 <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search notes...">
                 <button class="new-note-btn" id="newNoteBtn">✨ New Note</button>
+                <button class="generate-note-btn" id="generateNoteBtn">🤖 Generate Note</button>
                 
                 <div class="notes-list" id="notesList">
                     <div class="loading">Loading notes...</div>
@@ -404,6 +703,21 @@
                 <div class="editor-header">
                     <h2 class="editor-title" id="editorTitle">Select a note to edit</h2>
                     <div class="editor-actions" id="editorActions" style="display: none;">
+                        <select class="language-selector" id="languageSelector">
+                            <option value="English">English</option>
+                            <option value="Spanish">Español</option>
+                            <option value="French">Français</option>
+                            <option value="German">Deutsch</option>
+                            <option value="Italian">Italiano</option>
+                            <option value="Portuguese">Português</option>
+                            <option value="Russian">Русский</option>
+                            <option value="Japanese">日本語</option>
+                            <option value="Korean">한국어</option>
+                            <option value="Chinese">中文</option>
+                            <option value="Arabic">العربية</option>
+                            <option value="Hindi">हिन्दी</option>
+                        </select>
+                        <button class="btn btn-translate" id="translateBtn">🌐 Translate</button>
                         <button class="btn btn-save" id="saveBtn">💾 Save</button>
                         <button class="btn btn-delete" id="deleteBtn">🗑️ Delete</button>
                     </div>
@@ -447,6 +761,97 @@
         </div>
     </div>
 
+    <!-- Generate Note Modal -->
+    <div class="modal" id="generateModal">
+        <div class="modal-content">
+            <!-- Left Side: Input -->
+            <div class="modal-section left">
+                <div class="modal-header">
+                    <h2 class="modal-title">🤖 Generate Note with AI</h2>
+                    <button class="modal-close" id="closeModal">&times;</button>
+                </div>
+
+                <div class="modal-form-group">
+                    <label class="modal-label" for="generateDescription">
+                        📝 Describe what you want in your note
+                    </label>
+                    <textarea 
+                        class="modal-textarea" 
+                        id="generateDescription" 
+                        placeholder="Example: 'Badminton tmr 5pm @polyu' or 'Team meeting next Monday at 2pm to discuss Q4 goals'"
+                    ></textarea>
+                </div>
+
+                <div class="modal-form-group">
+                    <label class="modal-label" for="generateLanguage">
+                        🌐 Output Language
+                    </label>
+                    <select class="modal-select" id="generateLanguage">
+                        <option value="English">English</option>
+                        <option value="Spanish">Español</option>
+                        <option value="French">Français</option>
+                        <option value="German">Deutsch</option>
+                        <option value="Italian">Italiano</option>
+                        <option value="Portuguese">Português</option>
+                        <option value="Russian">Русский</option>
+                        <option value="Japanese">日本語</option>
+                        <option value="Korean">한국어</option>
+                        <option value="Chinese">中文</option>
+                        <option value="Arabic">العربية</option>
+                        <option value="Hindi">हिन्dी</option>
+                    </select>
+                </div>
+
+                <div class="modal-btn-group" style="margin-top: auto;">
+                    <button class="modal-btn modal-btn-primary" id="generateBtn">
+                        ✨ Generate
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Side: Preview -->
+            <div class="modal-section right">
+                <div class="modal-header">
+                    <h2 class="modal-title">📋 Generate Note Preview</h2>
+                </div>
+                
+                <div class="preview-box">
+                    <div class="preview-label">Title</div>
+                    <div class="preview-content preview-title" id="previewTitle">
+                        <em style="color: #999;">AI will generate title here...</em>
+                    </div>
+                </div>
+
+                <div class="preview-box" style="flex: 1;">
+                    <div class="preview-label">Content</div>
+                    <div class="preview-content" id="previewContent">
+                        <em style="color: #999;">AI will generate notes here...</em>
+                    </div>
+                </div>
+
+                <div class="preview-box">
+                    <div class="preview-label">Tags</div>
+                    <div class="preview-tags" id="previewTags">
+                        <em style="color: #999;">AI will generate tags here...</em>
+                    </div>
+                </div>
+
+                <div class="preview-box">
+                    <div class="preview-label">Event Date & Time</div>
+                    <div class="preview-content" id="previewEvent">
+                        <em style="color: #999;">AI will extract date/time if available...</em>
+                    </div>
+                </div>
+
+                <div class="modal-btn-group">
+                    <button class="modal-btn modal-btn-success" id="useGeneratedBtn" disabled>
+                        ✅ Create Note
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         class NoteTaker {
             constructor() {
@@ -454,6 +859,7 @@
                 this.currentNote = null;
                 this.isLoading = false;
                 this.hasUnsavedChanges = false;
+                this.generatedNote = null;
                 this.init();
             }
 
@@ -466,7 +872,21 @@
                 document.getElementById('newNoteBtn').addEventListener('click', () => this.createNewNote());
                 document.getElementById('saveBtn').addEventListener('click', () => this.saveNote());
                 document.getElementById('deleteBtn').addEventListener('click', () => this.deleteNote());
+                document.getElementById('translateBtn').addEventListener('click', () => this.translateNote());
                 document.getElementById('searchBox').addEventListener('input', (e) => this.searchNotes(e.target.value));
+                
+                // Generate Note Modal
+                document.getElementById('generateNoteBtn').addEventListener('click', () => this.openGenerateModal());
+                document.getElementById('closeModal').addEventListener('click', () => this.closeGenerateModal());
+                document.getElementById('generateBtn').addEventListener('click', () => this.generateNote());
+                document.getElementById('useGeneratedBtn').addEventListener('click', () => this.useGeneratedNote());
+                
+                // Close modal when clicking outside
+                document.getElementById('generateModal').addEventListener('click', (e) => {
+                    if (e.target.id === 'generateModal') {
+                        this.closeGenerateModal();
+                    }
+                });
                 
                 // Track changes and enable save button
                 const trackChanges = () => {
@@ -751,6 +1171,63 @@
                 }
             }
 
+            async translateNote() {
+                if (!this.currentNote) return;
+
+                const title = document.getElementById('noteTitle').value.trim();
+                const content = document.getElementById('noteContent').value.trim();
+                const tags = document.getElementById('noteTags').value.trim();
+                const targetLanguage = document.getElementById('languageSelector').value;
+
+                if (!title && !content && !tags) {
+                    this.showMessage('Please enter some content to translate', 'error');
+                    return;
+                }
+
+                // Disable translate button and show loading
+                const translateBtn = document.getElementById('translateBtn');
+                const originalText = translateBtn.textContent;
+                translateBtn.disabled = true;
+                translateBtn.textContent = '🔄 Translating...';
+
+                try {
+                    const response = await fetch('/api/translate', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            title: title,
+                            content: content,
+                            tags: tags,
+                            target_language: targetLanguage
+                        })
+                    });
+
+                    if (!response.ok) {
+                        const error = await response.json();
+                        throw new Error(error.error || 'Translation failed');
+                    }
+
+                    const translated = await response.json();
+
+                    // Update the form fields with translated content
+                    document.getElementById('noteTitle').value = translated.title || title;
+                    document.getElementById('noteContent').value = translated.content || content;
+                    document.getElementById('noteTags').value = translated.tags || tags;
+
+                    // Mark as having unsaved changes
+                    this.hasUnsavedChanges = true;
+                    this.updateSaveButton();
+
+                    this.showMessage(`Successfully translated to ${targetLanguage}!`, 'success');
+                } catch (error) {
+                    this.showMessage(`Translation error: ${error.message}`, 'error');
+                } finally {
+                    // Re-enable translate button
+                    translateBtn.disabled = false;
+                    translateBtn.textContent = originalText;
+                }
+            }
+
             searchNotes(query) {
                 const filteredNotes = query.trim() === '' ? this.notes : 
                     this.notes.filter(note => 
@@ -835,6 +1312,160 @@
                 const date = new Date(dateString + 'T00:00:00');
                 const options = { month: 'short', day: 'numeric', year: 'numeric' };
                 return date.toLocaleDateString('en-US', options);
+            }
+
+            // Generate Note Modal Methods
+            openGenerateModal() {
+                document.getElementById('generateModal').classList.add('show');
+                document.getElementById('generateDescription').value = '';
+                document.getElementById('generateLanguage').value = 'English';
+                this.resetPreview();
+                this.generatedNote = null;
+            }
+
+            closeGenerateModal() {
+                document.getElementById('generateModal').classList.remove('show');
+            }
+
+            resetPreview() {
+                document.getElementById('previewTitle').innerHTML = '<em style="color: #999;">AI will generate title here...</em>';
+                document.getElementById('previewContent').innerHTML = '<em style="color: #999;">AI will generate notes here...</em>';
+                document.getElementById('previewTags').innerHTML = '<em style="color: #999;">AI will generate tags here...</em>';
+                document.getElementById('previewEvent').innerHTML = '<em style="color: #999;">AI will extract date/time if available...</em>';
+                document.getElementById('useGeneratedBtn').disabled = true;
+            }
+
+            async generateNote() {
+                const description = document.getElementById('generateDescription').value.trim();
+                const outputLanguage = document.getElementById('generateLanguage').value;
+
+                if (!description) {
+                    alert('Please describe what you want in your note');
+                    return;
+                }
+
+                // Disable generate button and show loading
+                const generateBtn = document.getElementById('generateBtn');
+                const originalText = generateBtn.textContent;
+                generateBtn.disabled = true;
+                generateBtn.textContent = '🔄 Generating...';
+
+                try {
+                    // Get current date and time to send to AI
+                    const now = new Date();
+                    const currentDateTime = now.toISOString();
+                    const currentDateString = now.toLocaleDateString('en-US', { 
+                        weekday: 'long', 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                    });
+
+                    const response = await fetch('/api/generate', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            description: description,
+                            output_language: outputLanguage,
+                            current_date: currentDateString,
+                            current_datetime: currentDateTime
+                        })
+                    });
+
+                    if (!response.ok) {
+                        const error = await response.json();
+                        throw new Error(error.error || 'Generation failed');
+                    }
+
+                    this.generatedNote = await response.json();
+
+                    // Update preview
+                    document.getElementById('previewTitle').textContent = this.generatedNote.title || 'Untitled';
+                    document.getElementById('previewContent').textContent = this.generatedNote.content || 'No content';
+                    
+                    // Update tags
+                    const tagsContainer = document.getElementById('previewTags');
+                    if (this.generatedNote.tags) {
+                        const tags = this.generatedNote.tags.split(/[,，]/).map(tag => tag.trim());
+                        tagsContainer.innerHTML = tags.map(tag => 
+                            `<span class="preview-tag">${this.escapeHtml(tag)}</span>`
+                        ).join('');
+                    } else {
+                        tagsContainer.innerHTML = '<em style="color: #999;">No tags</em>';
+                    }
+
+                    // Update event date/time
+                    const eventContainer = document.getElementById('previewEvent');
+                    if (this.generatedNote.event_date || this.generatedNote.event_time) {
+                        let eventText = '';
+                        if (this.generatedNote.event_date) {
+                            eventText += `📅 ${this.formatEventDate(this.generatedNote.event_date)}`;
+                        }
+                        if (this.generatedNote.event_time) {
+                            eventText += ` ⏰ ${this.generatedNote.event_time}`;
+                        }
+                        eventContainer.innerHTML = eventText;
+                    } else {
+                        eventContainer.innerHTML = '<em style="color: #999;">No event date/time</em>';
+                    }
+
+                    // Enable "Create Note" button
+                    document.getElementById('useGeneratedBtn').disabled = false;
+
+                } catch (error) {
+                    alert(`Generation error: ${error.message}`);
+                    this.resetPreview();
+                } finally {
+                    // Re-enable generate button
+                    generateBtn.disabled = false;
+                    generateBtn.textContent = originalText;
+                }
+            }
+
+            async useGeneratedNote() {
+                if (!this.generatedNote) return;
+
+                // Check for unsaved changes
+                if (this.hasUnsavedChanges && this.currentNote) {
+                    if (!confirm('You have unsaved changes. Do you want to discard them and create a new note from AI generation?')) {
+                        return;
+                    }
+                }
+
+                // Create new note with generated content
+                this.currentNote = {
+                    id: null,
+                    title: this.generatedNote.title,
+                    content: this.generatedNote.content,
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                };
+
+                this.hasUnsavedChanges = false;
+                this.showEditor();
+                
+                // Fill in the form
+                document.getElementById('noteTitle').value = this.generatedNote.title || '';
+                document.getElementById('noteContent').value = this.generatedNote.content || '';
+                document.getElementById('noteTags').value = this.generatedNote.tags || '';
+                document.getElementById('noteEventDate').value = this.generatedNote.event_date || '';
+                document.getElementById('noteEventTime').value = this.generatedNote.event_time || '';
+                document.getElementById('editorTitle').textContent = this.generatedNote.title || 'New Note';
+                
+                // Mark as changed so save button is enabled
+                this.hasUnsavedChanges = true;
+                this.updateSaveButton();
+
+                // Close modal
+                this.closeGenerateModal();
+
+                // Remove active state from all notes
+                document.querySelectorAll('.note-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+
+                // Focus on title
+                document.getElementById('noteTitle').focus();
             }
         }
 

@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 from src.models.user import db
 from src.routes.user import user_bp
 from src.routes.note import note_bp
+from src.routes.translate import translate_bp
 from src.models.note import Note
 
 # Load environment variables from .env file
@@ -23,6 +24,7 @@ CORS(app)
 # register blueprints
 app.register_blueprint(user_bp, url_prefix='/api')
 app.register_blueprint(note_bp, url_prefix='/api')
+app.register_blueprint(translate_bp, url_prefix='/api')
 
 # Configure database - Supabase PostgreSQL
 # Get Supabase credentials from environment variables
